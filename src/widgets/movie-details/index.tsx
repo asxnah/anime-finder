@@ -1,7 +1,8 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Star, Calendar, X, User, Users } from 'lucide-react';
-import { type AniListMedia } from '../../entities/movie/model';
-import { useMovieStore } from '../../entities/movie/store';
+// Используем алиасы @/ для чистоты импортов
+import { type AniListMedia } from '@/entities/movie/model';
+import { useMovieStore } from '@/entities/movie/store';
 import clsx from 'clsx';
 
 interface Props {
@@ -29,32 +30,26 @@ export const MovieDetails = ({ anime, onClose }: Props) => {
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity" />
         
-        {/* 
-          overflow-hidden на самом контейнере, 
-          чтобы скроллбар не выходил за скругленные углы (rounded-3xl)
-        */}
         <Dialog.Content className={clsx(
           "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-3xl max-h-[85vh] overflow-hidden rounded-3xl flex flex-col md:flex-row shadow-2xl focus:outline-none border transition-colors",
           isDark ? "bg-[#151924] border-[#232B3D]" : "bg-white border-gray-200"
         )}>
           
-          {/* Крестик зафиксирован в углу */}
           <Dialog.Close asChild>
             <button className={clsx("absolute top-4 right-4 p-2 z-50 transition-colors rounded-full backdrop-blur-md", isDark ? "text-[#9CA3AF] hover:text-[#F3F4F6] bg-[#151924]/50 hover:bg-[#151924]" : "text-gray-500 hover:text-gray-900 bg-white/50 hover:bg-white")}>
               <X size={20} />
             </button>
           </Dialog.Close>
 
-          {/* Левая колонка с картинкой (фиксированная) */}
           <div className="w-full md:w-[320px] shrink-0 p-6 md:p-8">
             <img 
               src={anime.coverImage.extraLarge} 
               alt={displayTitle} 
+              loading="lazy" // <--- СЕНЬОРСКАЯ ОПТИМИЗАЦИЯ
               className="w-full h-auto max-h-[60vh] md:max-h-[70vh] object-cover rounded-2xl shadow-lg"
             />
           </div>
 
-          {/* Правая колонка с контентом (скроллится только она) */}
           <div className="flex-1 flex flex-col p-6 md:p-8 md:pl-0 overflow-y-auto">
             <Dialog.Title className={clsx("text-2xl font-bold mb-2 pr-8 transition-colors", isDark ? "text-[#F3F4F6]" : "text-gray-900")}>
               {displayTitle}

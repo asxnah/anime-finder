@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Star } from 'lucide-react';
 import { type AniListMedia } from '../model';
 import { useMovieStore } from '../store';
@@ -8,7 +9,7 @@ interface Props {
   onClick: (anime: AniListMedia) => void;
 }
 
-export const AnimeCard = ({ anime, onClick }: Props) => {
+export const AnimeCard = memo(({ anime, onClick }: Props) => {
   const { theme } = useMovieStore();
   const isDark = theme === 'dark';
 
@@ -32,11 +33,12 @@ export const AnimeCard = ({ anime, onClick }: Props) => {
         <img 
           src={anime.coverImage.extraLarge} 
           alt={displayTitle} 
+          loading="lazy" // <--- СЕНЬОРСКАЯ ОПТИМИЗАЦИЯ
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className={clsx(
           "absolute inset-0 bg-gradient-to-t via-transparent to-transparent", 
-          isDark ? "from-[#1A192A]" : "from-white" // Обновил цвет градиента под новый фон карточки
+          isDark ? "from-[#1A192A]" : "from-white"
         )} />
         
         {anime.averageScore && (
@@ -78,4 +80,6 @@ export const AnimeCard = ({ anime, onClick }: Props) => {
       </div>
     </div>
   );
-};
+});
+
+AnimeCard.displayName = 'AnimeCard'; // Хороший тон для React DevTools
