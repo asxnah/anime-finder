@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, forwardRef } from 'react';
+import { forwardRef, type InputHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Search, X } from 'lucide-react';
 import { useMovieStore } from '../../entities/movie/store';
@@ -20,7 +20,6 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           ref={ref}
           className={twMerge(
             'w-full h-[52px] text-[15px] rounded-[16px] pl-12 pr-12 focus:outline-none transition-all',
-            // Добавили красивый outline (ring) для фокуса
             'focus:ring-2 focus:ring-[#B399F3] focus:ring-offset-2',
             isDark 
               ? 'text-white placeholder:text-[#9CA3AF] focus:ring-offset-[#1A192A]' 
