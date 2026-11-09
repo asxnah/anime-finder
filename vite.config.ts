@@ -7,7 +7,6 @@ export default defineConfig({
   base: '/anime-finder/',
   resolve: {
     alias: {
-      // Современный и безопасный способ получения пути без __dirname
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
@@ -15,7 +14,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
-    // Меняем пул на threads, чтобы избежать бага с undici на CI
-    pool: 'threads',
+    // Отключаем параллельный запуск файлов (лечит баг с воркерами)
+    fileParallelism: false,
   },
 });
